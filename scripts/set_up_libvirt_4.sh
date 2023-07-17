@@ -3,4 +3,6 @@
 sudo systemctl enable --now libvirtd 
 
 sudo usermod -a -G libvirt $USER 
-sudo usermod -a -G libvirt-qemu $USER 
+
+sudo virsh net-start default
+sudo virsh net-autostart default
