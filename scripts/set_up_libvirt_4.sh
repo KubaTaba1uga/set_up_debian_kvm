@@ -12,7 +12,11 @@ sudo virsh net-destroy default
 sudo virsh net-autostart --disable default
 
 RANDOM_MAC=$(hexdump -vn3 -e '/3 "52:54:00"' -e '/1 ":%02x"' -e '"\n"' /dev/urandom)
-sudo ip link add $BRIDGE_NAME-dummy address $RANDOM_MAC type dummy
+
+echo "auto $BRIDGE_NAME-dummy
+iface $BRIDGE_NAME-dummy inet manual
+    pre-up /sbin/ip link add $BRIDGE_NAME-dummy type dummy
+    up /sbin/ip link set $BRIDGE_NAME-dummy address $RANDOM_MAC" | sudo tee -a /etc/network/interfaces
 
 echo "auto $BRIDGE_NAME
 iface $BRIDGE_NAME inet static
