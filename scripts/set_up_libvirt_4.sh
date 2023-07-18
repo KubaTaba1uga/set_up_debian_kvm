@@ -39,8 +39,6 @@ iface $BRIDGE_NAME inet static
     down /bin/systemctl stop dnsmasq@$BRIDGE_NAME.service || :
     " | sudo tee -a /etc/network/interfaces
 
-sudo systemctl restart networking
-
 sudo apt-get install -y net-tools
 
 echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
@@ -64,6 +62,4 @@ echo "bind-interfaces" | sudo tee -a /etc/dnsmasq.d/$BRIDGE_NAME.conf
 
 sudo cp scripts/.dnsmasq.service /etc/systemd/system/dnsmasq@.service
 
-sudo ifup dummy0
-sudo ifup $BRIDGE_NAME
-
+sudo systemctl restart networking
