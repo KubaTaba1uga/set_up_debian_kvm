@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BRIDGE_NAME=virt-nat-bridge 
+BRIDGE_NAME=virtbr0nat
 BRIDGE_IP=10.0.0.1
 
 sudo systemctl enable --now libvirtd 
