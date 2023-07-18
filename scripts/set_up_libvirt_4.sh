@@ -48,7 +48,7 @@ sudo touch /var/lib/dnsmasq/$BRIDGE_NAME/hostsfile
 sudo touch /var/lib/dnsmasq/$BRIDGE_NAME/leases
 
 sudo mkdir /var/lib/dnsmasq/$BRIDGE_NAME
-sudo cp scripts/.dnmasq.conf /var/lib/dnsmasq/$BRIDGE_NAME/dnsmasq.conf
+sudo cp scripts/.dnsmasq.conf /var/lib/dnsmasq/$BRIDGE_NAME/dnsmasq.conf
 
 sudo mkdir -p /etc/dnsmasq.d
 sudo touch /etc/dnsmasq.d/$BRIDGE_NAME.conf
