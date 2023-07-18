@@ -22,6 +22,8 @@ iface $BRIDGE_NAME inet static
     bridge_fd 2
     address $BRIDGE_IP
     netmask 255.255.255.0
+    up /bin/systemctl start dnsmasq@$BRIDGE_NAME.service || :
+    down /bin/systemctl stop dnsmasq@$BRIDGE_NAME.service || :
     " | sudo tee -a /etc/network/interfaces
 
 sudo apt-get install -y net-tools
