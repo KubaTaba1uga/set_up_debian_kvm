@@ -39,3 +39,5 @@ sudo iptables-restore scripts/.nat-iptables
 mkdir -p /var/lib/dnsmasq/$BRIDGE_NAME
 touch /var/lib/dnsmasq/$BRIDGE_NAME/hostsfile
 touch /var/lib/dnsmasq/$BRIDGE_NAME/leases
+
+sudo cp scripts.dnmasq.conf /var/lib/dnsmasq/$BRIDGE_NAME/dnsmasq.conf
