@@ -21,6 +21,8 @@ iface $BRIDGE_NAME-dummy inet manual
 
 " | sudo tee -a /etc/network/interfaces
 
+sudo systemctl restart networking
+
 echo "# bridge interface
 auto $BRIDGE_NAME
 iface $BRIDGE_NAME inet static
@@ -33,6 +35,8 @@ iface $BRIDGE_NAME inet static
     up /bin/systemctl start dnsmasq@$BRIDGE_NAME.service || :
     down /bin/systemctl stop dnsmasq@$BRIDGE_NAME.service || :
     " | sudo tee -a /etc/network/interfaces
+
+sudo systemctl restart networking
 
 sudo apt-get install -y net-tools
 
