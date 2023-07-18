@@ -46,7 +46,6 @@ sudo mkdir -p /etc/dnsmasq.d
 sudo touch /etc/dnsmasq.d/$BRIDGE_NAME.conf
 echo "except-interface=$BRIDGE_NAME" | sudo tee -a /etc/dnsmasq.d/$BRIDGE_NAME.conf
 echo "bind-interfaces" | sudo tee -a /etc/dnsmasq.d/$BRIDGE_NAME.conf
-sudo service dnsmasq restart
 
 sudo cp scripts/.dnmasq.service /etc/systemd/system/dnmasq@.service
 
