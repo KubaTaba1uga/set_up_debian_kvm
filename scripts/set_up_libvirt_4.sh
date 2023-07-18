@@ -41,6 +41,8 @@ sudo touch /var/lib/dnsmasq/$BRIDGE_NAME/leases
 
 sudo mkdir /var/lib/dnsmasq/$BRIDGE_NAME
 sudo cp scripts/.dnmasq.conf /var/lib/dnsmasq/$BRIDGE_NAME/dnsmasq.conf
+
+sudo mkdir -p /etc/dnsmasq.d
 sudo touch /etc/dnsmasq.d/$BRIDGE_NAME.conf
 echo "except-interface=$BRIDGE_NAME" | sudo tee -a /etc/dnsmasq.d/$BRIDGE_NAME.conf
 echo "bind-interfaces" | sudo tee -a /etc/dnsmasq.d/$BRIDGE_NAME.conf
