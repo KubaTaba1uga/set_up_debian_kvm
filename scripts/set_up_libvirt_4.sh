@@ -15,11 +15,11 @@ sudo virsh net-autostart --disable default
 
 RANDOM_MAC=$(hexdump -vn3 -e '/3 "52:54:00"' -e '/1 ":%02x"' -e '"\n"' /dev/urandom)
 
-echo "# dummy bridge interface
-auto $BRIDGE_NAME-dummy
-iface $BRIDGE_NAME-dummy inet manual
-    pre-up /sbin/ip link add $BRIDGE_NAME-dummy type dummy
-    up /sbin/ip link set $BRIDGE_NAME-dummy address $RANDOM_MAC
+echo "# dummy interface
+auto dummy0
+iface dummy0 inet manual
+    pre-up /sbin/ip link add dummy0 type dummy
+    up /sbin/ip link set dummy0 address $RANDOM_MAC
 
 " | sudo tee -a /etc/network/interfaces
 
@@ -29,7 +29,7 @@ echo "# bridge interface
 auto $BRIDGE_NAME
 iface $BRIDGE_NAME inet static
     # Make sure bridge-utils is installed!
-    bridge_ports $BRIDGE_NAME-dummy
+    bridge_ports dummy0
     bridge_stp on
     bridge_fd 2
     address $BRIDGE_IP
@@ -63,6 +63,6 @@ echo "bind-interfaces" | sudo tee -a /etc/dnsmasq.d/$BRIDGE_NAME.conf
 
 sudo cp scripts/.dnsmasq.service /etc/systemd/system/dnsmasq@.service
 
-sudo ifup $BRIDGE_NAME-dummy
+sudo ifup dummy0
 sudo ifup $BRIDGE_NAME
 
