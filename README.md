@@ -98,6 +98,8 @@ COMMIT
 # allow dhcp and dns
 -A INPUT -i virbr10 -p udp -m udp -m multiport --dports 53,67 -j ACCEPT
 -A INPUT -i virbr10 -p tcp -m tcp -m multiport --dports 53,67 -j ACCEPT
+# Allow packets that have been forwarded to particular ports on the VM.
+# -A FORWARD -d 10.0.0.77/32 -o virbr10 -p tcp -m tcp --syn -m conntrack --ctstate NEW -m multiport --dports 22,80,443 -j ACCEPT
 # Reject everything else.
 -A FORWARD -i virbr10 -j REJECT --reject-with icmp-port-unreachable
 -A FORWARD -o virbr10 -j REJECT --reject-with icmp-port-unreachable
