@@ -28,9 +28,6 @@ iface $BRIDGE_NAME inet static
 
 sudo apt-get install -y net-tools
 
-sudo ifup $BRIDGE_NAME-dummy
-sudo ifup $BRIDGE_NAME
-
 echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
 echo "net.ipv4.conf.all.forwarding=1" | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
@@ -49,3 +46,7 @@ echo "bind-interfaces" | sudo tee -a /etc/dnsmasq.d/$BRIDGE_NAME.conf
 sudo service dnsmasq restart
 
 sudo cp scripts/.dnmasq.service /etc/systemd/system/dnmasq@.service
+
+sudo ifup $BRIDGE_NAME-dummy
+sudo ifup $BRIDGE_NAME
+
