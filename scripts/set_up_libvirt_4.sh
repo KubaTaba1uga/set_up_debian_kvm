@@ -34,3 +34,8 @@ echo "net.ipv4.conf.all.forwarding=1" | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 
 sudo iptables-restore scripts/.nat-iptables
+
+# dnsmas    q
+mkdir -p /var/lib/dnsmasq/$BRIDGE_NAME
+touch /var/lib/dnsmasq/$BRIDGE_NAME/hostsfile
+touch /var/lib/dnsmasq/$BRIDGE_NAME/leases
