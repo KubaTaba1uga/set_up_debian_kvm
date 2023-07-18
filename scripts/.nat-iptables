@@ -7,7 +7,7 @@
 :OUTPUT ACCEPT [0:0]
 :POSTROUTING ACCEPT [0:0]
 # DHCP packets sent to VMs have no checksum (due to a longstanding bug).
--A POSTROUTING -o virbr10 -p udp -m udp --dport 68 -j CHECKSUM --checksum-fill
+-A POSTROUTING -o virtbr0nat -p udp -m udp --dport 68 -j CHECKSUM --checksum-fill
 COMMIT
 
 *nat
@@ -28,17 +28,17 @@ COMMIT
 :FORWARD ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
 # Allow established traffic to the private subnet.
--A FORWARD -d 10.0.0/24 -o virt-nat-bridge -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD -d 10.0.0/24 -o virtbr0nat -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 # Allow outbound traffic from the private subnet.
--A FORWARD -s 10.0.0.0/24 -i virt-nat-bridge -j ACCEPT
+-A FORWARD -s 10.0.0.0/24 -i virtbr0nat -j ACCEPT
 # Allow traffic between virtual machines.
--A FORWARD -i virt-nat-bridge -o virt-nat-bridge -j ACCEPT
+-A FORWARD -i virtbr0nat -o virtbr0nat -j ACCEPT
 # allow dhcp and dns
--A INPUT -i virt-nat-bridge -p udp -m udp -m multiport --dports 53,67 -j ACCEPT
--A INPUT -i virt-nat-bridge -p tcp -m tcp -m multiport --dports 53,67 -j ACCEPT
+-A INPUT -i virtbr0nat -p udp -m udp -m multiport --dports 53,67 -j ACCEPT
+-A INPUT -i virtbr0nat -p tcp -m tcp -m multiport --dports 53,67 -j ACCEPT
 # Allow packets that have been forwarded to particular ports on the VM.
-# -A FORWARD -d 10.0.0.77/32 -o virt-nat-bridge -p tcp -m tcp --syn -m conntrack --ctstate NEW -m multiport --dports 22,80,443 -j ACCEPT
+# -A FORWARD -d 10.0.0.77/32 -o virtbr0nat -p tcp -m tcp --syn -m conntrack --ctstate NEW -m multiport --dports 22,80,443 -j ACCEPT
 # Reject everything else.
--A FORWARD -i virt-nat-bridge -j REJECT --reject-with icmp-port-unreachable
--A FORWARD -o virt-nat-bridge -j REJECT --reject-with icmp-port-unreachable
+-A FORWARD -i virtbr0nat -j REJECT --reject-with icmp-port-unreachable
+-A FORWARD -o virtbr0nat -j REJECT --reject-with icmp-port-unreachable
 COMMIT
