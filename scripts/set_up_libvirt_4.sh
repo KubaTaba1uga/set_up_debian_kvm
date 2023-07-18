@@ -39,7 +39,7 @@ mkdir -p /var/lib/dnsmasq/$BRIDGE_NAME
 touch /var/lib/dnsmasq/$BRIDGE_NAME/hostsfile
 touch /var/lib/dnsmasq/$BRIDGE_NAME/leases
 
-sudo cp scripts.dnmasq.conf /var/lib/dnsmasq/$BRIDGE_NAME/dnsmasq.conf
+sudo cp scripts/.dnmasq.conf /var/lib/dnsmasq/$BRIDGE_NAME/dnsmasq.conf
 sudo touch /etc/dnsmasq.d/$BRIDGE_NAME.conf
 echo "except-interface=$BRIDGE_NAME" | sudo tee -a /etc/dnsmasq.d/$BRIDGE_NAME.conf
 echo "bind-interfaces" | sudo tee -a /etc/dnsmasq.d/$BRIDGE_NAME.conf
