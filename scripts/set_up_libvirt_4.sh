@@ -20,7 +20,7 @@ auto dummy0
 iface dummy0 inet manual
     pre-up /sbin/ip link add dummy0 type dummy
     up /sbin/ip link set dummy0 address $RANDOM_MAC
-    post-down link del dummy0
+    post-down /sbin/ip link del dummy0
 
 " | sudo tee -a /etc/network/interfaces
 
