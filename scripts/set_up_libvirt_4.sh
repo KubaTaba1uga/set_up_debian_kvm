@@ -22,8 +22,6 @@ iface dummy0 inet manual
 
 " | sudo tee -a /etc/network/interfaces
 
-sudo systemctl restart networking
-
 echo "# bridge interface
 auto $BRIDGE_NAME
 iface $BRIDGE_NAME inet static
@@ -33,9 +31,9 @@ iface $BRIDGE_NAME inet static
     bridge_fd 2
     address $BRIDGE_IP
     netmask 255.255.255.0
-    up /bin/systemctl start dnsmasq@$BRIDGE_NAME.service || :
-    down /bin/systemctl stop dnsmasq@$BRIDGE_NAME.service || :
     " | sudo tee -a /etc/network/interfaces
+
+sudo systemctl restart networking
 
 sudo apt-get install -y net-tools
 
@@ -58,5 +56,12 @@ echo "except-interface=$BRIDGE_NAME" | sudo tee -a /etc/dnsmasq.d/$BRIDGE_NAME.c
 echo "bind-interfaces" | sudo tee -a /etc/dnsmasq.d/$BRIDGE_NAME.conf
 
 sudo cp scripts/.dnsmasq.service /etc/systemd/system/dnsmasq@.service
+
+# autostart dnsmasq with bridge
+sudo mkdir /etc/NetworkManager
+sudo mkdir /etc/NetworkManager/dispatcher.d
+echo  | sudo tee -a /etc/NetworkManager/dispatcher.d/99-$BRIDGE_NAME
+
+
 
 sudo systemctl restart networking
