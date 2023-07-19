@@ -45,7 +45,7 @@ sudo iptables-restore scripts/.nat-iptables
 
 # dnsmasq
 sudo mkdir -p /var/lib/dnsmasq/$BRIDGE_NAME
-sudo touch /var/lib/dnsmasq/$BRIDGE_NAME/hostsfile
+sudo touch /var/lib/dnsmasq/$BRIDGE_NAME/hostsfile # <- file can be used to bound MAC & IP
 sudo touch /var/lib/dnsmasq/$BRIDGE_NAME/leases
 
 sudo cp scripts/.dnsmasq.conf /var/lib/dnsmasq/$BRIDGE_NAME/dnsmasq.conf
