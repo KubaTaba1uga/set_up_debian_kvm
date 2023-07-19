@@ -60,7 +60,7 @@ sudo cp scripts/.dnsmasq.service /etc/systemd/system/dnsmasq@.service
 # autostart dnsmasq with bridge
 sudo mkdir /etc/NetworkManager
 sudo mkdir /etc/NetworkManager/dispatcher.d
-echo  | sudo tee -a /etc/NetworkManager/dispatcher.d/99-$BRIDGE_NAME
+sudo cp scripts/.network-manager.virtbr0nat /etc/NetworkManager/dispatcher.d/99-$BRIDGE_NAME
 
 
 
