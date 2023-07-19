@@ -58,10 +58,8 @@ echo "bind-interfaces" | sudo tee -a /etc/dnsmasq.d/$BRIDGE_NAME.conf
 sudo cp scripts/.dnsmasq.service /etc/systemd/system/dnsmasq@.service
 
 # autostart dnsmasq with bridge
-sudo mkdir /etc/NetworkManager
-sudo mkdir /etc/NetworkManager/dispatcher.d
-sudo cp scripts/.network-manager.virtbr0nat /etc/NetworkManager/dispatcher.d/99-$BRIDGE_NAME
-
+systemctl start dnsmasq@virtbr0nat.service
+systemctl enable dnsmasq@virtbr0nat.service
 
 
 sudo systemctl restart networking
