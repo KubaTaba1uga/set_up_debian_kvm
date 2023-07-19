@@ -3,8 +3,6 @@
 BRIDGE_NAME=virtbr0nat
 BRIDGE_IP=10.0.0.1
 
-sudo modpbrobe dummy
-
 sudo systemctl enable --now libvirtd 
 
 sudo usermod -a -G libvirt $USER 
